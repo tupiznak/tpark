@@ -21,12 +21,12 @@ int32_t find_max(int32_t *array, int32_t N){
 	int32_t right = N - 1;
 	int32_t middle = (left + right) / 2;
 	
-	if (middle == 0) // всего 1 элемент в массиве
+	if (right == 0) // всего 1 элемент в массиве
 		return middle;
 	do{ 
-		if ((array[middle] > array[middle+1]) && (array[middle] > array[middle-1]))
+		if (middle == N - 1) // дошли до конца массива
 			return middle;
-		if (middle == N - 1)
+		if ((array[middle] > array[middle+1]) && (array[middle] > array[middle-1])) // нашли максимум
 			return middle;
 		if (array[middle] < array[middle-1] /*&& array[middle] > array[middle+1]*/) // идем влево
 			right = middle - 1;
