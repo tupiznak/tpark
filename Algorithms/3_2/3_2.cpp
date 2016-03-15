@@ -1,31 +1,30 @@
 #include <stdio.h>
-#include <stddef.h>
+#include <stdint.h>
 
-ptrdiff_t *array_init(size_t N);
-size_t find_max(ptrdiff_t *array, size_t N);
+int32_t *array_init(int32_t N);
+int32_t find_max(int32_t *array, int32_t N);
 
 int main(void){
-	ptrdiff_t *array;
-	size_t N;
+	int32_t *array;
+	int32_t N;
 	
-	scanf("%ld",&N);
+	scanf("%d",&N);
 	array = array_init(N);
-	printf("%ld",find_max(array,N));
-	
+	printf("%d",find_max(array,N));
+	delete[] array;
 }
 
-ptrdiff_t *array_init(size_t N){
-	ptrdiff_t *array = new ptrdiff_t [N];
-	for (size_t i = 0; i < N; ++i)
-		scanf("%ld",&array[i]);
-	delete [] array;
+int32_t *array_init(int32_t N){
+	int32_t *array = new int32_t [N];
+	for (int32_t i = 0; i < N; ++i)
+		scanf("%d",&array[i]);
 	return array;
 }
 
-size_t find_max(ptrdiff_t *array, size_t N){
-	ptrdiff_t left = 0;
-	ptrdiff_t right = N - 1;
-	ptrdiff_t middle = (left + right) / 2;
+int32_t find_max(int32_t *array, int32_t N){
+	int32_t left = 0;
+	int32_t right = N - 1;
+	int32_t middle = (left + right) / 2;
 	
 	if (middle == 0) // всего 1 элемент в массиве
 		return middle;
