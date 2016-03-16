@@ -1,3 +1,7 @@
+/***********************************************************************
+* 					Soldatov A.K. APO-13                               *
+*						Task 3_2                                       *
+***********************************************************************/
 #include <stdio.h>
 #include <stdint.h>
 
@@ -12,33 +16,32 @@ int main(void){
 	array = new int32_t[N];
 	for (int32_t i = 0; i < N; ++i)
 		scanf("%d",&array[i]);
-	printf("%d",find_max(array,N));
+	printf("%d",find_max(array,N));										// worst, when array[0] = max. O(log n)
 	delete[] array;
 }
 
-int32_t find_max(int32_t *array, int32_t N){
+int32_t find_max(int32_t *array, int32_t N){							// binary search
+	if (N == 1)															// 1 element in array
+		return 0;
+		
 	int32_t left = 0;
 	int32_t right = N - 1;
-	int32_t middle = (left + right) / 2;
+	int32_t middle = 0;					
 	
-	if (right == 0) // всего 1 элемент в массиве
-		return right;
+	if (right == 1)														// special case (for example -1, 4)
+		return ((array[0] > array[1])?0:1);		
 		
-	do{ 
-		if (middle == N - 1) // дошли до конца массива
+	while( !(left > right)){											// this will be always false  
+		middle = left + (right - left) / 2;								// to prevent data overflow (for big arrays)
+		if (middle == right)											// reached end of segment 
+			return middle;				
+		if ((array[middle] > array[middle+1]) && 						// found max
+			(array[middle] > array[middle-1])) 
 			return middle;
-		if (right == 1) // for example for array -1 4
-			return ((array[0] > array[1])?0:1);
-		if (middle == 0)
-			return middle;
-		if ((array[middle] > array[middle+1]) && (array[middle] > array[middle-1])) // нашли максимум
-			return middle;
-		if (array[middle] < array[middle-1] /*&& array[middle] > array[middle+1]*/) // идем влево
-			right = middle - 1;
-		else  // идем вправо
-			left = middle + 1;
-		middle = (left + right) / 2; 	
-	}while( !(left >= right));
-	
-	return middle;
+		if (array[middle] < array[middle-1]) 							// move left half
+			right = middle;												// could not do (middle - 1) could be out of index
+		else  
+			left = middle + 1;											// move right half
+	}
+	return middle;														
 }
