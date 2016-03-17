@@ -38,10 +38,7 @@ void CQueue::Enqueue(int a)
 			temp[i] = buffer[head+j];																	// все, что после head,- вправо
 		}
 		head = (bufferSize << 1) - (bufferSize - head);
-		for (int i = 0; i < head; ++i)
-		{
-			temp[i] = buffer[i];																		// все, что до head,- влево
-		}
+		memcpy(temp,buffr,head);
 		tail = tp;
 		delete[] buffer;
 		bufferSize <<= 1;
